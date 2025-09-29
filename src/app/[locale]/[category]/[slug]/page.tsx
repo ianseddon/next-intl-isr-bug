@@ -12,8 +12,6 @@ async function getArticle(slug: string) {
 	return articles[slug] ?? null;
 }
 
-export const revalidate = 64800;
-
 export async function generateStaticParams() {
 	return [];
 }
