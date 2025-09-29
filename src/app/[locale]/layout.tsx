@@ -1,28 +1,29 @@
-import {routing} from '@/i18n/routing';
-import {hasLocale, NextIntlClientProvider} from 'next-intl';
-import {notFound} from 'next/navigation';
-import {ReactNode} from 'react';
+import { routing } from "@/i18n/routing";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { notFound } from "next/navigation";
 
-type Props = {
-  children: ReactNode;
-  params: Promise<{locale: string}>;
-};
+export async function generateStaticParams() {
+	return [{ locale: "en" }];
+}
 
-export default async function LocaleLayout({children, params}: Props) {
-  // Ensure that the incoming `locale` is valid
-  const {locale} = await params;
-  if (!hasLocale(routing.locales, locale)) {
-    notFound();
-  }
+export default async function LocaleLayout({
+	children,
+	params,
+}: LayoutProps<"/[locale]">) {
+	// Ensure that the incoming `locale` is valid
+	const { locale } = await params;
+	if (!hasLocale(routing.locales, locale)) {
+		notFound();
+	}
 
-  return (
-    <html lang={locale}>
-      <head>
-        <title>next-intl-bug-repro-app-router</title>
-      </head>
-      <body>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
-      </body>
-    </html>
-  );
+	return (
+		<html lang={locale}>
+			<head>
+				<title>next-intl-bug-repro-app-router</title>
+			</head>
+			<body>
+				<NextIntlClientProvider>{children}</NextIntlClientProvider>
+			</body>
+		</html>
+	);
 }
