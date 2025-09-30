@@ -1,15 +1,11 @@
-import { Locale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { categories } from "./data";
-import { Link } from "@/i18n/navigation";
 
 export default async function CategoryPage({
 	params,
 }: PageProps<"/[locale]/[category]">) {
-	const { category, locale } = await params;
-
-	setRequestLocale(locale as Locale);
+	const { category } = await params;
 
 	if (!categories.includes(category)) throw notFound();
 

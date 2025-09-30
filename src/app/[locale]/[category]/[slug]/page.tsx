@@ -1,5 +1,3 @@
-import { Locale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 async function getArticle(slug: string) {
@@ -23,9 +21,7 @@ export async function generateStaticParams() {
 export default async function Page({
 	params,
 }: PageProps<"/[locale]/[category]/[slug]">) {
-	const { slug, locale } = await params;
-
-	setRequestLocale(locale as Locale);
+	const { slug } = await params;
 
 	const article = getArticle(slug);
 	if (!article) throw notFound();

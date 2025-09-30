@@ -1,5 +1,3 @@
-import { Locale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
 import { categories } from "./data";
 
 export async function generateStaticParams() {
@@ -10,9 +8,7 @@ export default async function CategoryLayout({
 	children,
 	params,
 }: LayoutProps<"/[locale]/[category]">) {
-	const { category, locale } = await params;
-
-	setRequestLocale(locale as Locale);
+	const { category } = await params;
 
 	return (
 		<>
